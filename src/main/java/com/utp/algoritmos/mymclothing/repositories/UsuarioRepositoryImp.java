@@ -35,8 +35,8 @@ public class UsuarioRepositoryImp implements UsuarioRepository{
     }
 
     @Override
-    public void save(Usuario usuario) {
-        entityManager.merge(usuario);
+    public Usuario save(Usuario usuario) {
+        return entityManager.merge(usuario);
     }
 
     @Override

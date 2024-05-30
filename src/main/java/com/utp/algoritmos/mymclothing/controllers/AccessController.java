@@ -23,8 +23,8 @@ public class AccessController {
     }
     
     @PostMapping("/registrar")
-    public void registrar(@RequestBody Usuario usuario) {
-        usuarioService.save(usuario);
+    public Usuario registrar(@RequestBody Usuario usuario) {
+       return usuarioService.save(usuario);
     }
     
     

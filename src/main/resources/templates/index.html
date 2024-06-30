@@ -1,1 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tienda</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+</head>
+
+<body>
+    <!-- Inicia la creacion del header-->
+    <header class="header">
+        <a href="#" class="logo">
+            <img th:src="@{/img/icono-logo.png}" alt="Logo" />
+        </a>
+        <nav class="navbar">
+            <a href="#inicio"> inicio</a>
+            <a href="#catalogo"> catalogo</a>
+            <a href="#descuentos"> descuentos</a>
+            <a href="#nosotros"> nosotros</a>
+            <a href="#footer"> social</a>
+        </nav>
+        <div class="icons">
+            <div class="bi bi-cart3" id="cart-btn"></div>
+            <div class="bi bi-person" id="user-btn"></div>
+            <div class="bi bi-list" id="opciones-btn"></div>
+        </div>
+        <div class="cart-items-container">
+            <h1>Destacado</h1>
+            <div class="cart-item">
+                <span class="bi bi-x-lg"></span>
+                <img th:src="@{/img/icono-imagen.png}" alt="" />
+                <div class="content">
+                    <h3>Cart Item 01</h3>
+                    <div class="price">S/. 0.00</div>
+                </div>
+            </div>
+            <div class="cart-item">
+                <span class="bi bi-x-lg"></span>
+                <img th:src="@{/img/icono-imagen.png}" alt="" />
+                <div class="content">
+                    <h3>Cart Item 02</h3>
+                    <div class="price">S/. 0.00</div>
+                </div>
+            </div>
+            <div class="cart-item">
+                <span class="bi bi-x-lg"></span>
+                <img th:src="@{/img/icono-imagen.png}" alt="" />
+                <div class="content">
+                    <h3>Cart Item 03</h3>
+                    <div class="price">S/. 0.00</div>
+                </div>
+            </div>
+            <div class="cart-item">
+                <span class="bi bi-x-lg"></span>
+                <img th:src="@{/img/icono-imagen.png}" alt="" />
+                <div class="content">
+                    <h3>Cart Item 04</h3>
+                    <div class="price">S/. 0.00</div>
+                </div>
+            </div>
+            <a href="#" class="btn"> Pagar ahora</a>
+        </div>
+    </header>
+    <!-- Finaliza la creacion del header-->
+
+    <!-- Inicia la creacion de INICIO de la pagina-->
+    <section class="inicio" id="inicio">
+        <div class="content">
+            <h3>NUEVA COLECCIÓN</h3>
+            <p>Otoño/Invierno 2024</p>
+            <a href="#" class="btn">get yours now</a>
+            <div class="image">
+                <img th:src="@{/img/icono-bienvenida.png}" alt="">
+            </div>
+        </div>
+    </section>
+    <!-- Finaliza la creacion de INICIO de la pagina-->
+
+    <!-- Inicia la creacion de la opcion "CATALAGO" de la pagina-->
+    <section class="catalogo" id="catalogo">
+        <h1 class="heading">nuestro <span> catalogo</span></h1>
+        <div class="box-container">
+            <div class="box">
+                <div class="icons">
+                    <a href="#" class="bi bi-cart3"></a>
+                    <a href="#" class="bi bi-suit-heart-fill"></a>
+                    <a href="#" class="bi bi-eye-fill"></a>
+                </div>
+                <div class="image">
+                    <img th:src="@{/img/icono-imagen.png}" alt="" />
+                </div>
+                <div class="content">
+                    <h3>ropa</h3>
+                    <div class="stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <div class="price">S/. 19.99 <span>29.99</span></div>
+                </div>
+            </div>
+            
+            <div class="box">
+                <div class="icons">
+                    <a href="#" class="bi bi-cart3"></a>
+                    <a href="#" class="bi bi-suit-heart-fill"></a>
+                    <a href="#" class="bi bi-eye-fill"></a>
+                </div>
+                <div class="image">
+                    <img th:src="@{/img/icono-imagen.png}" alt="" />
+                </div>
+                <div class="content">
+                    <h3>ropa</h3>
+                    <div class="stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <div class="price">S/. 19.99 <span>29.99</span></div>
+                </div>
+            </div>
+            
+            <div class="box">
+                <div class="icons">
+                    <a href="#" class="bi bi-cart3"></a>
+                    <a href="#" class="bi bi-suit-heart-fill"></a>
+                    <a href="#" class="bi bi-eye-fill"></a>
+                </div>
+                <div class="image">
+                    <img th:src="@{/img/icono-imagen.png}" alt="" />
+                </div>
+                <div class="content">
+                    <h3>ropa</h3>
+                    <div class="stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <div class="price">S/. 19.99 <span>29.99</span></div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="icons">
+                    <a href="#" class="bi bi-cart3"></a>
+                    <a href="#" class="bi bi-suit-heart-fill"></a>
+                    <a href="#" class="bi bi-eye-fill"></a>
+                </div>
+                <div class="image">
+                    <img th:src="@{/img/icono-imagen.png}" alt="" />
+                </div>
+                <div class="content">
+                    <h3>ropa</h3>
+                    <div class="stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <div class="price">S/. 19.99 <span>29.99</span></div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="icons">
+                    <a href="#" class="bi bi-cart3"></a>
+                    <a href="#" class="bi bi-suit-heart-fill"></a>
+                    <a href="#" class="bi bi-eye-fill"></a>
+                </div>
+                <div class="image">
+                    <img th:src="@{/img/icono-imagen.png}" alt="" />
+                </div>
+                <div class="content">
+                    <h3>ropa</h3>
+                    <div class="stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <div class="price">S/. 19.99 <span>29.99</span></div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="icons">
+                    <a href="#" class="bi bi-cart3"></a>
+                    <a href="#" class="bi bi-suit-heart-fill"></a>
+                    <a href="#" class="bi bi-eye-fill"></a>
+                </div>
+                <div class="image">
+                    <img th:src="@{/img/icono-imagen.png}" alt="" />
+                </div>
+                <div class="content">
+                    <h3>ropa</h3>
+                    <div class="stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <div class="price">S/. 19.99 <span>29.99</span></div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="icons">
+                    <a href="#" class="bi bi-cart3"></a>
+                    <a href="#" class="bi bi-suit-heart-fill"></a>
+                    <a href="#" class="bi bi-eye-fill"></a>
+                </div>
+                <div class="image">
+                    <img th:src="@{/img/icono-imagen.png}" alt="" />
+                </div>
+                <div class="content">
+                    <h3>ropa</h3>
+                    <div class="stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <div class="price">S/. 19.99 <span>29.99</span></div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="icons">
+                    <a href="#" class="bi bi-cart3"></a>
+                    <a href="#" class="bi bi-suit-heart-fill"></a>
+                    <a href="#" class="bi bi-eye-fill"></a>
+                </div>
+                <div class="image">
+                    <img th:src="@{/img/icono-imagen.png}" alt="" />
+                </div>
+                <div class="content">
+                    <h3>ropa</h3>
+                    <div class="stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <div class="price">S/. 19.99 <span>29.99</span></div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="icons">
+                    <a href="#" class="bi bi-cart3"></a>
+                    <a href="#" class="bi bi-suit-heart-fill"></a>
+                    <a href="#" class="bi bi-eye-fill"></a>
+                </div>
+                <div class="image">
+                    <img th:src="@{/img/icono-imagen.png}" alt="" />
+                </div>
+                <div class="content">
+                    <h3>ropa</h3>
+                    <div class="stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <div class="price">S/. 19.99 <span>29.99</span></div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="icons">
+                    <a href="#" class="bi bi-cart3"></a>
+                    <a href="#" class="bi bi-suit-heart-fill"></a>
+                    <a href="#" class="bi bi-eye-fill"></a>
+                </div>
+                <div class="image">
+                    <img th:src="@{/img/icono-imagen.png}" alt="" />
+                </div>
+                <div class="content">
+                    <h3>ropa</h3>
+                    <div class="stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <div class="price">S/. 19.99 <span>29.99</span></div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="icons">
+                    <a href="#" class="bi bi-cart3"></a>
+                    <a href="#" class="bi bi-suit-heart-fill"></a>
+                    <a href="#" class="bi bi-eye-fill"></a>
+                </div>
+                <div class="image">
+                    <img th:src="@{/img/icono-imagen.png}" alt="" />
+                </div>
+                <div class="content">
+                    <h3>ropa</h3>
+                    <div class="stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <div class="price">S/. 19.99 <span>29.99</span></div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="icons">
+                    <a href="#" class="bi bi-cart3"></a>
+                    <a href="#" class="bi bi-suit-heart-fill"></a>
+                    <a href="#" class="bi bi-eye-fill"></a>
+                </div>
+                <div class="image">
+                    <img th:src="@{/img/icono-imagen.png}" alt="" />
+                </div>
+                <div class="content">
+                    <h3>ropa</h3>
+                    <div class="stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <div class="price">S/. 19.99 <span>29.99</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Finaliza la creacion de la opcion "PRODUCTOS" de la pagina-->
+
+    <!-- Inicia la creacion de la opcion "DESCUENTOS" de la pagina-->
+    <section class="descuentos" id="descuentos">
+        <h1 class="heading">productos <span> destacados</span></h1>
+        <div class="box-container">
+            <div class="box">
+                <img th:src="@{/img/icono-ropa.png}" alt="" />
+                <h3>Polo</h3>
+                <div class="price">S/. 19.99 <span>29.99</span></div>
+                <a href="#" class="btn">agregar al carrito</a>
+            </div>
+
+            <div class="box">
+                <img th:src="@{/img/icono-ropa.png}" alt="" />
+                <h3>Polo</h3>
+                <div class="price">S/. 19.99 <span>29.99</span></div>
+                <a href="#" class="btn">agregar al carrito</a>
+            </div>
+
+            <div class="box">
+                <img th:src="@{/img/icono-ropa.png}" alt="" />
+                <h3>Polo</h3>
+                <div class="price">S/. 19.99 <span>29.99</span></div>
+                <a href="#" class="btn">agregar al carrito</a>
+            </div>
+
+            <div class="box">
+                <img th:src="@{/img/icono-ropa.png}" alt="" />
+                <h3>Polo</h3>
+                <div class="price">S/. 19.99 <span>29.99</span></div>
+                <a href="#" class="btn">agregar al carrito</a>
+            </div>
+
+            <div class="box">
+                <<img th:src="@{/img/icono-ropa.png}" alt="" />
+                <h3>Polo</h3>
+                <div class="price">S/. 19.99 <span>29.99</span></div>
+                <a href="#" class="btn">agregar al carrito</a>
+            </div>
+
+            <div class="box">
+                <img th:src="@{/img/icono-ropa.png}" alt="" />
+                <h3>Polo</h3>
+                <div class="price">S/. 19.99 <span>29.99</span></div>
+                <a href="#" class="btn">agregar al carrito</a>
+            </div>
+        </div>
+    </section>
+    <!-- Finaliza la creacion de la opcion "DESCUENTOS" de la pagina-->
+
+    <!-- Inicia la creacion de la opcion "NOSOTROS" de la pagina-->
+    <section class="nosotros" id="nosotros">
+        <h1 class="heading"><span> acerca</span> de nosotros</h1>
+        <div class="row">
+            <div class="image">
+                <img th:src="@{/img/icono-nosotros.png}" alt="" />
+            </div>
+            <div class="content">
+                <h3>Lorem ipsum dolor sit amet consectetur ?</h3>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
+                    laudantium illum ea aut fugiat, vero magnam reiciendis repellendus.
+                    Voluptatibus, sit molestiae? Obcaecati expedita voluptates quia vero
+                    ipsum animi aliquid blanditiis.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel odio
+                    similique perspiciatis eligendi non, ipsam dolores blanditiis
+                    inventore deleniti aliquid.
+                </p>
+                <a href="#" class="btn"> Saber más</a>
+            </div>
+        </div>
+    </section>
+    <!-- Finaliza la creacion de la opcion "NOSOTROS" de la pagina-->
+
+    <!-- Inicia la creacion del FOOTER-->
+    <section class="footer" id="footer">
+        <div class="share">
+            <a href="https://es-la.facebook.com/" class="bi bi-facebook"></a>
+            <a href="https://x.com/" class="bi bi-twitter-x"></a>
+            <a href="https://www.instagram.com/" class="bi bi-instagram"></a>
+            <a href="https://www.linkedin.com/" class="bi bi-linkedin"></a>
+        </div>
+        <div class="links">
+            <a href="#inicio">inicio</a>
+            <a href="#catalogo">catalogo</a>
+            <a href="#descuentos">descuentos</a>
+            <a href="#nosotros">nosotros</a>
+        </div>
+        <div class="credit">
+            Creado por <span> Oscar M. G. F </span> | Todos los derechos reservados
+        </div>
+    </section>
+    <!-- Finaliza la creacion del FOOTER-->
+
+    <!-- JavaScript link-->
+    <script th:src="@{/js/javascript.js}"></script>
+</body>
+
+<footer></footer>
+
+</html>

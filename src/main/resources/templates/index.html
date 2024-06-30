@@ -445,6 +445,25 @@
     </section>
     <!-- Finaliza la creacion del FOOTER-->
 
+    <section id="pago">
+            <h2>Realizar Pago</h2>
+            <form action="/process-payment" method="post">
+                <label for="cardNumber">Número de tarjeta:</label>
+                <input type="text" id="cardNumber" name="cardNumber" required><br><br>
+                
+                <label for="expiryDate">Fecha de expiración:</label>
+                <input type="text" id="expiryDate" name="expiryDate" required><br><br>
+                
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" name="cvv" required><br><br>
+                
+                <label for="amount">Monto:</label>
+                <input type="text" id="amount" name="amount" required><br><br>
+                
+                <button type="submit">Pagar</button>
+            </form>
+        </section>
+
     <!-- JavaScript link-->
     <script th:src="@{/js/javascript.js}"></script>
 </body>

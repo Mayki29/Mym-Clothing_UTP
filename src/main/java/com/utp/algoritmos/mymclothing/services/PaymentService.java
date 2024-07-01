@@ -11,8 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class PaymentService {
 
-    private final String IZIPAY_API_URL = "https://api.izipay.com/v1/payments"; // Reemplaza con la URL real de la API de Izipay
-    private final String IZIPAY_API_KEY = "tu_api_key"; // Reemplaza con tu clave de API de Izipay
+    private final String IZIPAY_API_URL = "........."; // URL real de la API de Izipay
+    private final String IZIPAY_API_KEY = "........"; // Clave de API de Izipay
 
     public boolean processPayment(String cardNumber, String expiryDate, String cvv, String amount) {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {

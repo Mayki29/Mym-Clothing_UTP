@@ -7,7 +7,7 @@
     <title>Tienda</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-    <script src="https://www.paypal.com/sdk/js?client-id=AbTmLH_ZnqUla3JUOwD7KmoPg8_Wjfy-P185YoEcFbqG-zq60N14mM2OuuizvEpvMWGCvN5WLc6O4Q2O"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AbTmLH_ZnqUla3JUOwD7KmoPg8_Wjfy-P185YoEcFbqG-zq60N14mM2OuuizvEpvMWGCvN5WLc6O4Q2O&currency=PEN"></script>
 </head>
 
 <body>
@@ -479,7 +479,8 @@
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                        value: '53.50' // Reemplaza con el monto total a pagar
+                        value: '53.50' // Reemplazable según el monto total a pagar
+                        currency_code: 'PEN' // Moneda peruana
                     }
                 }]
             });

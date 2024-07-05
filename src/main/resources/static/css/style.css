@@ -242,7 +242,7 @@ section {
 .nosotros .row .content p {
   font-size: 1.6rem;
   color: #ccc;
-  pad: 1rem 0;
+  padding: 1rem 0;
   line-height: 1.8;
 }
 

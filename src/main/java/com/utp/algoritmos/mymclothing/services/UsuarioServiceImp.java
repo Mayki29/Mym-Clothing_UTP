@@ -34,20 +34,21 @@ public class UsuarioServiceImp implements UsuarioService{
     }
 
     @Override
-    public void save(Usuario usuario) {
+    public Usuario save(Usuario usuario) {
         usuario.setRol(2L);
         usuario.setFechaCreacion(LocalDateTime.now());
-        usuario.setPassword(DigestUtils.sha256Hex(usuario.getPassword()));
-        usuarioRepository.save(usuario);
+        usuario.setPassword(DigestUtils.sha256Hex(usuario.getPassword())); 
+        Usuario savedUser = usuarioRepository.save(usuario);
+        if(savedUser == null) return null;
+        savedUser.setPassword(null);
+        return savedUser;
     }
 
     @Override
     public Usuario login(Usuario usuario) {
         usuario.setPassword(DigestUtils.sha256Hex(usuario.getPassword()));
         Usuario logedUser = usuarioRepository.login(usuario);
-        if(logedUser == null){
-            return null;
-        }
+        if(logedUser == null)return null;
         logedUser.setPassword(null);
         return logedUser;
     }

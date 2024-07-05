@@ -1,5 +1,7 @@
 package com.utp.algoritmos.mymclothing.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,17 +25,25 @@ public class DetalleVenta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_ITEM")
     private Long id;
-    @Column(name = "ID_VENTA")
-    private Long idVenta;
+    @ManyToOne
+    @JoinColumn(name = "ID_VENTA")
+    @JsonIgnore
+    private Venta venta;
+
     @ManyToOne
     @JoinColumn(name = "ID_PRODUCTO")
     private Producto producto;
     @Column(name = "CANTIDAD")
     private Integer cantidad;
-    @Column(name = "SUB_TOTAL")
-    private Double subTotal;
+
+    @Column(name = "PRECIO_UNITARIO")
+    private Double precioUnitario;
 
     //void temporalmente
     public void calcularSubTotal(){}
+
+    public Double getSubTotal(){
+        return precioUnitario * cantidad;
+    }
 
 }

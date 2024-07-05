@@ -4,8 +4,10 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,16 +30,16 @@ public class Venta {
     @Column(name = "ID_VENTA")
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "ID_USUARIO", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_USUARIO")
     private Usuario usuario;
-    @OneToMany(mappedBy = "idVenta")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "ID_VENTA")
     private List<DetalleVenta> detallesVenta;
     @Column(name = "FECHA_HORA")
     private LocalDateTime fecha;
-    @Column(name = "TOTAL")
-    private Double total;
+    @Column(name = "ESTADO")
+    private String estado;
 
     //void temporalmente
-    public void generarVenta(){}
     public void calcularTotal(){}
 }

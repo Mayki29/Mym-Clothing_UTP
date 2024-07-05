@@ -12,15 +12,15 @@ import jakarta.transaction.Transactional;
 
 @Repository
 @Transactional
-public class VentaRepositoryImp implements VentaRepository{
+public class VentaRepositoryImp{
 
     @PersistenceContext
     EntityManager entityManager;
 
-    @Override
-    public List<Venta> findAll() {
-        String query = "FROM Venta";
-        return entityManager.createQuery(query).getResultList();
-    }
+    // @Override
+    // public List<Venta> findAll() {
+    //     String query = "FROM Venta";
+    //     return entityManager.createQuery(query).getResultList();
+    // }
     
 }

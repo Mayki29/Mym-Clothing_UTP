@@ -2,12 +2,17 @@ package com.utp.algoritmos.mymclothing.models;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,6 +46,11 @@ public class Usuario {
     private Long rol;
     @Column(name = "FECHA_CREACION")
     private LocalDateTime fechaCreacion;
+
+    @OneToMany
+    @JoinColumn(name = "ID_USUARIO")
+    @JsonIgnore
+    private List<Venta> ventas;
     
 
     //void temporalmente

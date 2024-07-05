@@ -1,5 +1,6 @@
 package com.utp.algoritmos.mymclothing.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,18 @@ public class VentaServiceImp implements VentaService{
 
     @Override
     public List<Venta> findAll() {
-        return ventaRepository.findAll();
+        return (List<Venta>)ventaRepository.findAll();
     }
+
+    @Override
+    public void save(Venta venta) {
+        Venta nVenta = venta;
+        nVenta.setFecha(LocalDateTime.now());
+        nVenta.setEstado("Pendiente");
+
+        ventaRepository.save(nVenta);
+        
+    }
+    
 
 }

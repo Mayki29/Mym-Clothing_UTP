@@ -51,9 +51,4 @@ public class Usuario {
     @JoinColumn(name = "ID_USUARIO")
     @JsonIgnore
     private List<Venta> ventas;
-    
-
-    //void temporalmente
-    public void iniciarSesion(){}
-    public void registrar(){}
 }

@@ -148,7 +148,6 @@ window.addEventListener("load", () => {
 })
 
 function buscarProducto(idProducto){
-    console.log(idProducto)
     return listaProductos.filter((p) => p.id == idProducto)[0] || {}
 }
 

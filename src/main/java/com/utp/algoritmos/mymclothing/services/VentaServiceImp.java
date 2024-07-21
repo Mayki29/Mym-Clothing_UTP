@@ -29,6 +29,11 @@ public class VentaServiceImp implements VentaService{
         ventaRepository.save(nVenta);
         
     }
+
+    @Override
+    public Venta findById(Long id) {
+        return ventaRepository.findById(id).orElse(null);
+    }
     
 
 }

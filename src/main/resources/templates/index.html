@@ -38,15 +38,15 @@
                 <i class="uil uil-times form_close"></i>
                 <!-- Login From -->
                 <div class="form login_form">
-                    <form action="#">
+                    <form th:action="@{/access/login}" method="post" th:object="${usuario}">
                         <h2>Inicia sesión en MYM</h2>
 
                         <div class="input_box">
-                            <input type="email" placeholder="Ingresa tu correo electronico" required />
+                            <input type="email" name="email" placeholder="Ingresa tu correo electronico" required />
                             <i class="uil uil-envelope-alt email"></i>
                         </div>
                         <div class="input_box">
-                            <input type="password" placeholder="Ingresa tu contraseña" required />
+                            <input type="password" name="password" placeholder="Ingresa tu contraseña" required />
                             <i class="uil uil-lock password"></i>
 
                         </div>
@@ -59,7 +59,7 @@
                             <a href="#" class="forgot_pw">¿Olvidaste tu contraseña?</a>
                         </div>
 
-                        <button class="button" onclick="redireccionar()">Iniciar Sesión</button>
+                        <button class="button" type="submit">Iniciar Sesión</button>
 
                         <div class="login_signup">¿No tienes una cuenta aún? <a href="#" id="signup">Registrate</a>
                         </div>
@@ -68,27 +68,35 @@
 
                 <!-- Signup From -->
                 <div class="form signup_form">
-                    <form action="#">
+                    <form th:action="@{/access/registrar}" method="post" th:object="${usuario}">
                         <h2>Registrate en MYM</h2>
 
                         <div class="input_box">
-                            <input type="email" placeholder="Ingrese su correo electronico" required />
+                            <input type="text" name="nombres" placeholder="Ingrese su nombre" required />
                             <i class="uil uil-envelope-alt email"></i>
                         </div>
                         <div class="input_box">
-                            <input type="password" placeholder="Crear contraseña" required />
+                            <input type="text" name="apellidos" placeholder="Ingrese su apellido" required />
+                            <i class="uil uil-envelope-alt email"></i>
+                        </div>
+                        <div class="input_box">
+                            <input type="email" name="email" placeholder="Ingrese su correo electronico" required />
+                            <i class="uil uil-envelope-alt email"></i>
+                        </div>
+                        <div class="input_box">
+                            <input type="password" name="password" placeholder="Crear contraseña" required />
                             <i class="uil uil-lock password"></i>
                         </div>
                         <div class="input_box">
                             <input type="password" placeholder="Confirmar contraseña" required />
                             <i class="uil uil-lock password"></i>
                         </div>
-                        <div class="input_box">
+                        <!--div class="input_box">
                             <input type="tel" placeholder="Ingrese su numero de telefono" required />
                             <i class="uil uil-phone phone"></i>
-                        </div>
+                        </div-->
 
-                        <button class="button" onclick="redireccionar()">Registrate Ahora</button>
+                        <button class="button" type="submit">Registrate Ahora</button>
 
                         <div class="login_signup">¿Ya tienes una cuenta?<a href="#" id="login"> Inicia Sesión</a>
                         </div>
@@ -149,7 +157,7 @@
                         <i class="bi bi-star-fill"></i>
                         <i class="bi bi-star-half"></i>
                     </div>
-                    <div th:text="${producto.precioVenta}" class="price">S/. 19.99 <span>29.99</span></div>
+                    <div th:text="${'S/. '+producto.precioVenta}" class="price"></div>
                 </div>
             </div>
         </div>

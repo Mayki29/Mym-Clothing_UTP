@@ -18,9 +18,10 @@ window.onscroll = () => {
 
 /* Profile */
 
-let subMenu = document.getElementById("subMenu");
+
 
 function toggleMenu() {
+  let subMenu = document.getElementById("subMenu");
   subMenu.classList.toggle("open-menu");
 }
 

@@ -66,6 +66,10 @@ public class HomeControlller {
     public List<Venta> getAllVentas(){
         return ventaService.findAll();
     }
+    @GetMapping("/ventas/{id}")
+    public Venta getByid(@PathVariable Long id){
+        return ventaService.findById(id);
+    }
 
     @PostMapping("/ventas")
     @ResponseStatus(HttpStatus.CREATED)

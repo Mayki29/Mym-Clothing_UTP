@@ -93,7 +93,7 @@ document.getElementById("botonEditar").addEventListener("click", function (event
         }
         else {
             mensaje.classList.add('noExisteError')
-            setTimeout(() => { mensaje.classList.remove('noExsiteError') }, 2500);
+            setTimeout(() => { mensaje.classList.remove('noExisteError') }, 2500);
         }
         guardarAlmacenamientoLocal('productos', productos);
     }

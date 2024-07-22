@@ -18,7 +18,7 @@ let mensaje = document.getElementById('mensaje');
 function actualizarIconoCarrito() {
     const iconoCarrito = document.querySelector(".bi-cart3");
     const totalProductos = productos.reduce((sum, prod) => sum + prod.cantidad, 0);
-    iconoCarrito.setAttribute("data-count", totalProductos);
+    iconoCarrito.setAttribute("cart-count", totalProductos);
 }
 
 // Función para buscar producto por ID

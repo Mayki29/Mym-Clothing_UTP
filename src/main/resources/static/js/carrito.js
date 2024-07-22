@@ -128,7 +128,7 @@ function registrarVenta() {
 }
 
 // Integración de Stripe
-const stripe = Stripe('your-publishable-key');
+const stripe = Stripe('pk_test_51PbtkaLx8S7JHdc9C7CRcbe6CXxzxUe20ghUsWNS6jh0pNqGwNApFJZfYeCvw7J51n9dOF6F4uXh1y9QjCoCoRmD00uxsTQV5S');
 
 document.getElementById("stripe-button").addEventListener("click", function () {
     let productosCart = obtenerAlmacenamientoLocal('productos');

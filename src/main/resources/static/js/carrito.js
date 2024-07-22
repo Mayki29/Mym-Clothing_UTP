@@ -1,5 +1,14 @@
+function actualizarIconoCarrito() {
+    let productosCart = obtenerAlmacenamientoLocal('productos');
+    let totalCantidad = productosCart.reduce((sum, producto) => sum + producto.cantidad, 0);
+    document.querySelector("#cart-btn .badge").textContent = totalCantidad;
+}
+
+// Llama a esta función dentro de las funciones de cambio de cantidad, eliminación y carga del carrito.
+
 window.onload = function() {
     cargarCarrito();
+    actualizarIconoCarrito();
 };
 
 function guardarAlmacenamientoLocal(llave, valor_a_guardar) {
@@ -10,21 +19,6 @@ function obtenerAlmacenamientoLocal(llave) {
     const datos = JSON.parse(localStorage.getItem(llave));
     return datos;
 }
-
-let productos = obtenerAlmacenamientoLocal('productos') || [];
-let mensaje = document.getElementById('mensaje');
-
-// Añadir un producto
-document.querySelector(".box-container").addEventListener("click", e => {
-    if (e.target.classList.contains('btn-agregar-carrito')) {
-        let idProducto = e.target.parentElement.parentElement.querySelector(".content > input").value;
-        let producto = buscarProducto(idProducto);
-        producto.cantidad = 1; // Inicializar cantidad
-        productos.push(producto);
-        guardarAlmacenamientoLocal('productos', productos);
-        cargarCarrito();
-    }
-});
 
 function buscarProducto(idProducto) {
     return listaProductos.filter((p) => p.id == idProducto)[0] || {};
@@ -77,6 +71,7 @@ function cargarCarrito() {
 
     carrito.innerHTML = elementos;
     totalTag.textContent = obtenerTotal();
+    actualizarIconoCarrito();
 }
 
 function cambiarCantidad(index, change) {
@@ -106,6 +101,7 @@ function obtenerTotal() {
 
 function limpiarCarrito() {
     localStorage.removeItem("productos");
+    actualizarIconoCarrito();
 }
 
 function registrarVenta() {
@@ -141,6 +137,7 @@ function registrarVenta() {
     .then(response => {
         if (response.status === 201) {
             alert("Guardado en base de datos");
+            limpiarCarrito();
         } else {
             console.error('Error:', response.statusText);
         }
@@ -149,4 +146,5 @@ function registrarVenta() {
         console.error('Error:', error);
     });
 }
+
 

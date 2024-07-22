@@ -129,33 +129,37 @@ function registrarVenta() {
 
 // Integración de Stripe
 
-document.getElementById("stripe-button").addEventListener("click", function () {
-    let productosCart = obtenerAlmacenamientoLocal('productos');
-    fetch('http://localhost:4242/create-checkout-session', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            items: productosCart.map(prod => ({
-                id: prod.id,
-                name: prod.nombreProducto,
-                quantity: prod.cantidad,
-                price: prod.precioVenta
-            }))
+document.addEventListener('DOMContentLoaded', function () {
+    const stripe = Stripe('pk_test_51PbtkaLx8S7JHdc9C7CRcbe6CXxzxUe20ghUsWNS6jh0pNqGwNApFJZfYeCvw7J51n9dOF6F4uXh1y9QjCoCoRmD00uxsTQV5S'); // Clave pública de Stripe
+
+    document.getElementById("stripe-button").addEventListener("click", function () {
+        let productosCart = obtenerAlmacenamientoLocal('productos');
+        fetch('http://localhost:4242/create-checkout-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                items: productosCart.map(prod => ({
+                    id: prod.id,
+                    name: prod.nombreProducto,
+                    quantity: prod.cantidad,
+                    price: prod.precioVenta
+                }))
+            })
         })
-    })
-    .then(response => response.json())
-    .then(session => {
-        return stripe.redirectToCheckout({ sessionId: session.id });
-    })
-    .then(result => {
-        if (result.error) {
-            alert(result.error.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
+        .then(response => response.json())
+        .then(session => {
+            return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(result => {
+            if (result.error) {
+                alert(result.error.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     });
 });
 

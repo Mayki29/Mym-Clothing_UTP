@@ -116,7 +116,7 @@ document.getElementById("botonEliminar").addEventListener("click", function (eve
 
     if (van == false) {
         mensaje.classList.add('noExsiteError')
-        setTimeout(() => { mensaje.classList.remove('noExsiteError') }, 2500);
+        setTimeout(() => { mensaje.classList.remove('noExisteError') }, 2500);
     }
     else {
         mensaje.classList.add('realizado')

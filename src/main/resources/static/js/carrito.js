@@ -1,14 +1,5 @@
-function actualizarIconoCarrito() {
-    let productosCart = obtenerAlmacenamientoLocal('productos');
-    let totalCantidad = productosCart.reduce((sum, producto) => sum + producto.cantidad, 0);
-    document.querySelector("#cart-btn .badge").textContent = totalCantidad;
-}
-
-// Llama a esta función dentro de las funciones de cambio de cantidad, eliminación y carga del carrito.
-
 window.onload = function() {
     cargarCarrito();
-    actualizarIconoCarrito();
 };
 
 function guardarAlmacenamientoLocal(llave, valor_a_guardar) {
@@ -20,88 +11,78 @@ function obtenerAlmacenamientoLocal(llave) {
     return datos;
 }
 
+let productos = obtenerAlmacenamientoLocal('productos') || [];
+let mensaje = document.getElementById('mensaje');
+
+// Función para actualizar el icono del carrito
+function actualizarIconoCarrito() {
+    const iconoCarrito = document.querySelector(".bi-cart3");
+    const totalProductos = productos.reduce((sum, prod) => sum + prod.cantidad, 0);
+    iconoCarrito.setAttribute("data-count", totalProductos);
+}
+
+// Función para buscar producto por ID
 function buscarProducto(idProducto) {
     return listaProductos.filter((p) => p.id == idProducto)[0] || {};
 }
 
+// Función para cargar el carrito desde localStorage
 function cargarCarrito() {
     const carrito = document.querySelector(".cart-items-container-c");
     let elementos = "";
     let productosCart = obtenerAlmacenamientoLocal('productos');
     let totalTag = document.querySelector(".precio-total");
-
-    productosCart.forEach((producto, index) => {
-        elementos += `<div class="cart-item">
-            <span class="bi bi-x-lg" onclick="eliminarProducto(${index})"></span>
-            <img src="imgProductos/${producto.urlImagen}" alt="" />
-            <div class="content">
-                <h3>${producto.nombreProducto}</h3>
-                <div class="price">S/.${producto.precioVenta}</div>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#productoModal${index}">Ver detalles</button>
-                <div class="quantity-container">
-                    <button onclick="cambiarCantidad(${index}, -1)">-</button>
-                    <span class="quantity">${producto.cantidad}</span>
-                    <button onclick="cambiarCantidad(${index}, 1)">+</button>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="productoModal${index}" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel${index}" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="productoModalLabel${index}">${producto.nombreProducto}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Talla: ${producto.talla || 'Única'}</p>
-                        <p>Color: ${producto.color || 'No especificado'}</p>
-                        <p>Precio: S/.${producto.precioVenta}</p>
-                        <p>Descripción: ${producto.descripcion || 'No disponible'}</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+    
+    for (let i = 0; i < productosCart.length; i++) {
+        elementos += `
+            <div class="cart-item">
+                <span class="bi bi-x-lg" onclick="eliminarProducto(${productosCart[i].id})"></span>
+                <img src="imgProductos/${productosCart[i].urlImagen}" alt="" />
+                <div class="content">
+                    <h3>${productosCart[i].nombreProducto}</h3>
+                    <div class="price">S/.${productosCart[i].precioVenta}</div>
+                    <div class="quantity">
+                        <button class="btn btn-sm btn-secondary" onclick="cambiarCantidad(${productosCart[i].id}, -1)">-</button>
+                        <span>${productosCart[i].cantidad}</span>
+                        <button class="btn btn-sm btn-secondary" onclick="cambiarCantidad(${productosCart[i].id}, 1)">+</button>
                     </div>
                 </div>
-            </div>
-        </div>`;
-    });
-
+            </div>`;
+    }
+    
     carrito.innerHTML = elementos;
     totalTag.textContent = obtenerTotal();
     actualizarIconoCarrito();
 }
 
-function cambiarCantidad(index, change) {
+function obtenerTotal() {
     let productosCart = obtenerAlmacenamientoLocal('productos');
-    if (productosCart[index].cantidad + change > 0) {
-        productosCart[index].cantidad += change;
-        guardarAlmacenamientoLocal('productos', productosCart);
-        cargarCarrito();
-    }
+    let total = productosCart.reduce((sum, prod) => sum + prod.precioVenta * prod.cantidad, 0);
+    return total;
 }
 
-function eliminarProducto(index) {
-    let productosCart = obtenerAlmacenamientoLocal('productos');
-    productosCart.splice(index, 1);
-    guardarAlmacenamientoLocal('productos', productosCart);
+function eliminarProducto(idProducto) {
+    productos = productos.filter(prod => prod.id !== idProducto);
+    guardarAlmacenamientoLocal('productos', productos);
     cargarCarrito();
 }
 
-function obtenerTotal() {
-    let productosCart = obtenerAlmacenamientoLocal('productos');
-    let total = 0;
-    for (let i = 0; i < productosCart.length; i++) {
-        total += productosCart[i].precioVenta * productosCart[i].cantidad;
+function cambiarCantidad(idProducto, cambio) {
+    let producto = productos.find(prod => prod.id === idProducto);
+    if (producto) {
+        producto.cantidad += cambio;
+        if (producto.cantidad <= 0) {
+            eliminarProducto(idProducto);
+        } else {
+            guardarAlmacenamientoLocal('productos', productos);
+            cargarCarrito();
+        }
     }
-    return total;
 }
 
 function limpiarCarrito() {
     localStorage.removeItem("productos");
-    actualizarIconoCarrito();
+    cargarCarrito();
 }
 
 function registrarVenta() {
@@ -124,7 +105,7 @@ function registrarVenta() {
             "direccion": "Los viñedos H-13",
             "dni": "73242253",
             "email": "zicmayki@gmail.com",
-            "edad": "18",
+            "edad": "18"
         }
     };
     fetch('/api/ventas', {
@@ -135,9 +116,8 @@ function registrarVenta() {
         body: JSON.stringify(venta)
     })
     .then(response => {
-        if (response.status === 201) {
-            alert("Guardado en base de datos");
-            limpiarCarrito();
+        if (response.status == 201) {
+            alert("guardado en base de datos");
         } else {
             console.error('Error:', response.statusText);
         }
@@ -146,5 +126,38 @@ function registrarVenta() {
         console.error('Error:', error);
     });
 }
+
+// Integración de Stripe
+const stripe = Stripe('your-publishable-key');
+
+document.getElementById("stripe-button").addEventListener("click", function () {
+    let productosCart = obtenerAlmacenamientoLocal('productos');
+    fetch('/create-checkout-session', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            items: productosCart.map(prod => ({
+                id: prod.id,
+                name: prod.nombreProducto,
+                quantity: prod.cantidad,
+                price: prod.precioVenta
+            }))
+        })
+    })
+    .then(response => response.json())
+    .then(session => {
+        return stripe.redirectToCheckout({ sessionId: session.id });
+    })
+    .then(result => {
+        if (result.error) {
+            alert(result.error.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
 
 

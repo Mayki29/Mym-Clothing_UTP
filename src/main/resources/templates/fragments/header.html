@@ -12,7 +12,9 @@
     </nav>
 
     <div class="icons">
-        <div class="bi bi-cart3" id="cart-btn"></div>
+        <div class="bi bi-cart3" id="cart-btn">
+            <span id="cart-count" class="cart-count">0</span>
+        </div>
         <div class="bi bi-person" id="user-btn"></div>
         <div th:if="${session == null}" class="bi bi-person-circle" id="user-btn" onclick="toggleMenu()"></div>
         <div th:unless="${session == null}" class="bi bi-list" id="opciones-btn"></div>

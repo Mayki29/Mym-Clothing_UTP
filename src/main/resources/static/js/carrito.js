@@ -1,201 +1,125 @@
 window.onload = function() {
     cargarCarrito();
-  };
+};
+
 function guardarAlmacenamientoLocal(llave, valor_a_guardar) {
-    localStorage.setItem(llave, JSON.stringify(valor_a_guardar))
+    localStorage.setItem(llave, JSON.stringify(valor_a_guardar));
 }
+
 function obtenerAlmacenamientoLocal(llave) {
-    const datos = JSON.parse(localStorage.getItem(llave))
-    return datos
+    const datos = JSON.parse(localStorage.getItem(llave));
+    return datos;
 }
 
 let productos = obtenerAlmacenamientoLocal('productos') || [];
-let mensaje = document.getElementById('mensaje')
+let mensaje = document.getElementById('mensaje');
 
-//Añadir un producto
-const añadirProducto = document.getElementById('productoAñadir')
-const añadirValor = document.getElementById('valorAñadir')
-const añadirExistencia = document.getElementById('existenciaAñadir')
-const añadirImagen = document.getElementById('ImagenAñadir')
-
+// Añadir un producto
 document.querySelector(".box-container").addEventListener("click", e => {
     if (e.target.classList.contains('btn-agregar-carrito')) {
-        let idProducto = e.target.parentElement.parentElement.querySelector(".content > input").value
-        
-        productos.push(buscarProducto(idProducto))
-        guardarAlmacenamientoLocal('productos', productos)
-        cargarCarrito()
-        
-
-        /*let van = true
-
-        if (productoAñadir == '' || valorAñadir == '' || existenciaAñadir == '' || imagenAñadir == '') {
-            mensaje.classList.add('llenarCampos')
-            setTimeout(() => { mensaje.classList.remove('llenarCampos') }, 2500)
-            van = false
-        }
-        else {
-            for (let i = 0; i < productos.length; i++) {
-                if (productos[i].nombre == productoAñadir) {
-                    mensaje.classList.add('repetidoError')
-                    setTimeout(() => { mensaje.classList.remove('repetidoError') }, 2500)
-                    van = false
-                }
-            }
-        }
-
-        if (van == true) {
-            productos.push({
-                nombre: productoAñadir,
-                valor: valorAñadir,
-                existencia: existenciaAñadir,
-                urlImagen: imagenAñadir
-            })
-            mensaje.classList.add('realizado')
-            setTimeout(() => {
-                mensaje.classList.remove('repetidoError')
-                window.location.reload()
-            }, 1500)
-        }
-        guardarAlmacenamientoLocal('productos', productos);*/
-    }
-
-})
-
-// Editar
-const productoEd = document.getElementById('productoEditar')
-const atributoEd = document.getElementById('atributoEditar')
-const nuevoAtributoEd = document.getElementById('nuevoAtributo')
-
-document.getElementById("botonEditar").addEventListener("click", function (event) {
-    event.preventDefault()
-    let productoEditar = productoEd.value
-    let atributoEditar = atributoEd.value
-    let nuevoAtributo = nuevoAtributoEd.value
-    let van = false
-    if (productoEditar == '' || atributoEditar == '' || nuevoAtributo == '') {
-        mensaje.classList.add('llenarCampos')
-        setTimeout(() => { mensaje.classList.remove('llenarCampos') }, 2500)
-    }
-    else {
-        for (let i = 0; i < productos.length; i++) {
-            if (productos[i].nombre == productoEditar) {
-                productos[i][atributoEditar] = nuevoAtributo
-                van = true
-            }
-        }
-        if (van == true) {
-            mensaje.classList.add('realizado')
-            setTimeout(() => {
-                mensaje.classList.remove('realizado')
-                window.location.reload()
-            }, 1500);
-        }
-        else {
-            mensaje.classList.add('noExisteError')
-            setTimeout(() => { mensaje.classList.remove('noExisteError') }, 2500);
-        }
+        let idProducto = e.target.parentElement.parentElement.querySelector(".content > input").value;
+        let producto = buscarProducto(idProducto);
+        producto.cantidad = 1; // Inicializar cantidad
+        productos.push(producto);
         guardarAlmacenamientoLocal('productos', productos);
+        cargarCarrito();
     }
-})
+});
 
-// Eliminar
-const productoE = document.getElementById('productoEliminar')
+function buscarProducto(idProducto) {
+    return listaProductos.filter((p) => p.id == idProducto)[0] || {};
+}
 
-document.getElementById("botonEliminar").addEventListener("click", function (event) {
-    event.preventDefault()
-    let productoEliminar = productoE.value
-    let van = false
+function cargarCarrito() {
+    const carrito = document.querySelector(".cart-items-container-c");
+    let elementos = "";
+    let productosCart = obtenerAlmacenamientoLocal('productos');
+    let totalTag = document.querySelector(".precio-total");
 
-    for (let i = 0; i < productos.length; i++) {
-        if (productos[i].nombre == productoEliminar) {
-            productos.splice(i, 1)
-            van = true
-        }
-    }
-
-    if (van == false) {
-        mensaje.classList.add('noExsiteError')
-        setTimeout(() => { mensaje.classList.remove('noExisteError') }, 2500);
-    }
-    else {
-        mensaje.classList.add('realizado')
-        setTimeout(() => {
-            mensaje.classList.remove('realizado')
-            window.location.reload()
-        }, 1500);
-    }
-    guardarAlmacenamientoLocal('productos', productos);
-})
-
-// mostrar productos
-window.addEventListener("load", () => {
-    const productoEd = document.getElementById('productoEditar')
-    const productoEl = document.getElementById('productoEliminar')
-    for (let i = 0; i < productos.length; i++) {
-        productoEd.innerHTML += `<option>${productos[i].nombre}</option>`
-        productoEl.innerHTML += `<option>${productos[i].nombre}</option>`
-    }
-    Object.keys(productos[0]).forEach(element => {
-        atributoEd.innerHTML += `<option>${element}</option>`
+    productosCart.forEach((producto, index) => {
+        elementos += `<div class="cart-item">
+            <span class="bi bi-x-lg" onclick="eliminarProducto(${index})"></span>
+            <img src="imgProductos/${producto.urlImagen}" alt="" />
+            <div class="content">
+                <h3>${producto.nombreProducto}</h3>
+                <div class="price">S/.${producto.precioVenta}</div>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#productoModal${index}">Ver detalles</button>
+                <div class="quantity-container">
+                    <button onclick="cambiarCantidad(${index}, -1)">-</button>
+                    <span class="quantity">${producto.cantidad}</span>
+                    <button onclick="cambiarCantidad(${index}, 1)">+</button>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="productoModal${index}" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel${index}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productoModalLabel${index}">${producto.nombreProducto}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Talla: ${producto.talla || 'Única'}</p>
+                        <p>Color: ${producto.color || 'No especificado'}</p>
+                        <p>Precio: S/.${producto.precioVenta}</p>
+                        <p>Descripción: ${producto.descripcion || 'No disponible'}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
     });
 
-    let mostraProductos = document.getElementById('mostrarProductos')
-    mostraProductos.innerHTML = ''
-    for (let i = 0; i < productos.length; i++) {
-        mostraProductos.innerHTML += `<div class="contenedorProductos"><img src="${productos[i].urlImagen}"><div class="informacion"><p>${productos[i].nombre}</p><p class="precio"><span>Precio: ${productos[i].valor}$</span></p> Existencia: ${productos[i].existencia}<p></p></div></div>`
-    }
-})
-
-function buscarProducto(idProducto){
-    return listaProductos.filter((p) => p.id == idProducto)[0] || {}
-}
-
-function cargarCarrito(){
-    const carrito = document.querySelector(".cart-items-container-c")
-    let elementos = "";
-    let productosCart = obtenerAlmacenamientoLocal('productos')
-    let totalTag = document.querySelector(".precio-total");
-    for(let i = 0; i < productosCart.length; i++){
-        elementos += '<div class="cart-item">'+
-            '<span class="bi bi-x-lg"></span>'+
-            '<img src="imgProductos/'+productosCart[i].urlImagen+'" alt="" />'+
-            '<div class="content">'+
-                '<h3>'+productosCart[i].nombreProducto+'</h3>'+
-                '<div class="price">S/.'+productosCart[i].precioVenta+'</div>'+
-            '</div>'+
-        '</div>'
-    }
     carrito.innerHTML = elementos;
-    totalTag.textContent=obtenerTotal()
-
+    totalTag.textContent = obtenerTotal();
 }
-function obtenerTotal(){
-    let productosCart = obtenerAlmacenamientoLocal('productos')
-    let total = 0
-    for(let i = 0; i < productosCart.length; i++){
-        total += productosCart[0].precioVenta
+
+function cambiarCantidad(index, change) {
+    let productosCart = obtenerAlmacenamientoLocal('productos');
+    if (productosCart[index].cantidad + change > 0) {
+        productosCart[index].cantidad += change;
+        guardarAlmacenamientoLocal('productos', productosCart);
+        cargarCarrito();
     }
-    return total
 }
 
-function limpiarCarrito(){
-    localStorage.removeItem("productos")
+function eliminarProducto(index) {
+    let productosCart = obtenerAlmacenamientoLocal('productos');
+    productosCart.splice(index, 1);
+    guardarAlmacenamientoLocal('productos', productosCart);
+    cargarCarrito();
+}
+
+function obtenerTotal() {
+    let productosCart = obtenerAlmacenamientoLocal('productos');
+    let total = 0;
+    for (let i = 0; i < productosCart.length; i++) {
+        total += productosCart[i].precioVenta * productosCart[i].cantidad;
+    }
+    return total;
+}
+
+function limpiarCarrito() {
+    localStorage.removeItem("productos");
 }
 
 function registrarVenta() {
-
     let detalleVenta = [];
-    let productosCart = obtenerAlmacenamientoLocal('productos')
-    for(let i = 0; i < productosCart.length; i++){
+    let productosCart = obtenerAlmacenamientoLocal('productos');
+    for (let i = 0; i < productosCart.length; i++) {
         let item = {
-            "producto":productosCart[i],
-            "cantidad":1,
-            "precioUnitario":productosCart[i].precioVenta
-        }
-        detalleVenta.push(item)
+            "producto": productosCart[i],
+            "cantidad": productosCart[i].cantidad,
+            "precioUnitario": productosCart[i].precioVenta
+        };
+        detalleVenta.push(item);
     }
-    venta = {
+    let venta = {
         "detallesVenta": detalleVenta,
         "usuario": {
             "id": 1,
@@ -206,7 +130,7 @@ function registrarVenta() {
             "email": "zicmayki@gmail.com",
             "edad": "18",
         }
-    }
+    };
     fetch('/api/ventas', {
         method: 'POST',
         headers: {
@@ -215,8 +139,8 @@ function registrarVenta() {
         body: JSON.stringify(venta)
     })
     .then(response => {
-        if (response.status == 201) {
-            alert("guardado en base de datos")
+        if (response.status === 201) {
+            alert("Guardado en base de datos");
         } else {
             console.error('Error:', response.statusText);
         }
@@ -225,3 +149,4 @@ function registrarVenta() {
         console.error('Error:', error);
     });
 }
+

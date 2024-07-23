@@ -12,7 +12,9 @@
     </nav>
 
     <div class="icons">
-        <div class="bi bi-cart3" id="cart-btn"></div>
+        <div class="bi bi-cart3" id="cart-btn">
+            <span id="cart-count" class="cart-count">0</span>
+        </div>
         <div th:if="${sesion}" class="bi bi-person-circle" id="user-btn-logged" onclick="toggleMenu()"></div>
         <div th:unless="${sesion}" class="bi bi-person" id="user-btn"></div>
         <div class="bi bi-list" id="opciones-btn"></div>
@@ -61,6 +63,6 @@
         <hr>
         <p>Total: S/. <span class="precio-total">0</span></p> 
         <hr>
-        <div id="paypal-button-container"></div> <!-- Botón de PayPal aquí -->
+        <button id="stripe-button" class="btn btn-primary">Pagar con Stripe</button> <!-- Botón de Stripe aquí -->
     </div>
 </header>

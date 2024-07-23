@@ -5,10 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.utp.algoritmos.mymclothing.models.Usuario;
 import com.utp.algoritmos.mymclothing.services.UsuarioService;
 
+import jakarta.servlet.http.HttpSession;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,11 +27,11 @@ public class AccessController {
     private UsuarioService usuarioService;
 
     @PostMapping("/login")
-    public String login(@ModelAttribute Usuario usuario, Model model) {
+    public String login(@ModelAttribute Usuario usuario, Model model, HttpSession session) {
         
         Usuario user = usuarioService.login(usuario);
         if(user != null){
-            model.addAttribute("session", user);
+            session.setAttribute("sesion", user);
             return "redirect:/"; 
         }
         model.addAttribute("message", "Datos incorrectos");
@@ -40,5 +45,11 @@ public class AccessController {
         return "redirect:/";
     }
     
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("sesion");
+        return "redirect:/";
+    }
+
     
 }

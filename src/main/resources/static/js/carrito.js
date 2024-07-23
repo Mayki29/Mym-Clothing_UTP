@@ -19,14 +19,13 @@ const añadirExistencia = document.getElementById('existenciaAñadir')
 const añadirImagen = document.getElementById('ImagenAñadir')
 
 document.querySelector(".box-container").addEventListener("click", e => {
+    debugger
     if (e.target.classList.contains('btn-agregar-carrito')) {
         let idProducto = e.target.parentElement.parentElement.querySelector(".content > input").value
         
         productos.push(buscarProducto(idProducto))
         guardarAlmacenamientoLocal('productos', productos)
         cargarCarrito()
-        
-
         /*let van = true
 
         if (productoAñadir == '' || valorAñadir == '' || existenciaAñadir == '' || imagenAñadir == '') {

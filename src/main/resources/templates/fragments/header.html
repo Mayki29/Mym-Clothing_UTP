@@ -13,16 +13,16 @@
 
     <div class="icons">
         <div class="bi bi-cart3" id="cart-btn"></div>
-        <div class="bi bi-person" id="user-btn"></div>
-        <div th:if="${session == null}" class="bi bi-person-circle" id="user-btn" onclick="toggleMenu()"></div>
-        <div th:unless="${session == null}" class="bi bi-list" id="opciones-btn"></div>
+        <div th:if="${sesion}" class="bi bi-person-circle" id="user-btn-logged" onclick="toggleMenu()"></div>
+        <div th:unless="${sesion}" class="bi bi-person" id="user-btn"></div>
+        <div class="bi bi-list" id="opciones-btn"></div>
     </div>
 
-    <div class="sub-menu-wrap" id="subMenu">
+<div th:if="${sesion}" class="sub-menu-wrap" id="subMenu">
         <div class="sub-menu">
             <div class="user-info">
                 <img src="img/user.png">
-                <h3>Oscar Manuel</h3>
+                <h3 th:text="${sesion.nombres}"></h3>
             </div>
 
             <hr>
@@ -44,13 +44,15 @@
                 <span>></span>
             </a>
 
-            <a href="index.html" class="sub-menu-link">
+            <a href="/access/logout" class="sub-menu-link">
                 <img src="img/logout.png">
                 <p>Cerrar sesión</p>
                 <span>></span>
             </a>
         </div>
     </div>
+
+    
 
     <div class="cart-items-container">
         <div class="cart-items-container-c">

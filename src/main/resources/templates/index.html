@@ -130,6 +130,14 @@
         </section>
     </section>
 
+    <div th:if="${sesion}">
+        <p>Bienvenido, <span th:text="${sesion.nombres}">Usuario</span>!</p>
+    </div>
+
+    <div th:if="${message}">
+        <p th:text="${message}">Mensaje</p>
+    </div>
+
     <!-- Finaliza la creacion de INICIO de la pagina-->
 
     <!-- Inicia la creacion de la opcion "CATALAGO" de la pagina-->
@@ -261,6 +269,11 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
             const listaProductos = /*[[${productos}]]*/ '[]';
+            const sesion = /*[[${sesion}]]*/ '';
+            if(sesion !== null || sesion != undefined){
+                localStorage.setItem("session",JSON.stringify(sesion));
+                console.log(sesion)
+            }
         /*]]>*/
     </script>
     <script>

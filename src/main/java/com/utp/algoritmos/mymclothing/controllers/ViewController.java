@@ -33,6 +33,7 @@ public class ViewController {
         List<Producto> productos = productoService.findAll();
         model.addAttribute("productos", productos);
 
+        //Obtener sesion
         Usuario sessionUser = (Usuario) session.getAttribute("sesion");
         if (sessionUser != null) {
             model.addAttribute("sesion", sessionUser);
@@ -44,17 +45,5 @@ public class ViewController {
         }
         return "index"; // Referencia a src/main/resources/templates/index.html
     }
-
-    // @PostMapping("/registrar")
-    // public String registrar(@ModelAttribute Usuario usuario, Model model) {
-    //     usuarioService.save(usuario);
-    //     return "index";
-    // }
-
-    // @PostMapping("/login")
-    // public String login(@ModelAttribute Usuario usuario, Model model) {
-    //     usuarioService.login(usuario);
-    //     return "index";
-    // }
 }
 

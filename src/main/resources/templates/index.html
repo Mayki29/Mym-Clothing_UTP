@@ -5,11 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tienda</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <link rel="stylesheet" th:href="@{/css/style_form.css}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/style_form.css}" />
     
 </head>
 
@@ -130,14 +130,6 @@
             </div>
         </section>
     </section>
-
-    <div th:if="${sesion}">
-        <p>Bienvenido, <span th:text="${sesion.nombres}">Usuario</span>!</p>
-    </div>
-
-    <div th:if="${message}">
-        <p th:text="${message}">Mensaje</p>
-    </div>
 
     <!-- Finaliza la creacion de INICIO de la pagina-->
 
@@ -275,11 +267,6 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
             const listaProductos = /*[[${productos}]]*/ '[]';
-            const sesion = /*[[${sesion}]]*/ '';
-            if(sesion !== null || sesion != undefined){
-                localStorage.setItem("session",JSON.stringify(sesion));
-                console.log(sesion)
-            }
         /*]]>*/
     </script>
     <script>

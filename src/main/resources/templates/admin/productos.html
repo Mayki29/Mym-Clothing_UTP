@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!--Bootstrap 5 icons CDN-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <title>ADMINISTRADOR</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin/style.css}" />
+</head>
+
+<body>
+
+
+    <section class="p-3">
+
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary newUser" data-bs-toggle="modal" data-bs-target="#userForm">Agregar Nueva
+                    Prenda<i class="bi bi-plus-circle-fill"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped table-hover mt-3 text-center table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Categoria</th>
+                            <th>Talla</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Descripcion</th>
+                            <th>Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data">
+                        <tr th:each="producto : ${productos}">
+                            <td th:text="${producto.id}">ID</td>
+                            <td><img th:src="@{${'/imgProductos/'+producto.urlImagen}}" alt="" width="50" height="50">
+                            </td>
+                            <td th:text="${producto.nombreProducto}">Nombre</td>
+                            <td th:text="${producto.categoria.nombre}">Categoria</td>
+                            <td th:text="${producto.talla}">Talla</td>
+                            <td th:text="${'S/. '+producto.precioVenta}">Precio</td>
+                            <td th:text="${producto.stock}">Stock</td>
+                            <td th:text="${producto.descripcion}">Descripcion</td>
+                            <td>
+                                <button class="btn btn-success" th:onclick="'readInfo('+${producto.id} + ')'"
+                                    data-bs-toggle="modal" data-bs-target="#readData"><i class="bi bi-eye"></i></button>
+                                <button class="btn btn-primary" th:onclick="'editInfo('+${producto.id} + ')'"
+                                    data-bs-toggle="modal" data-bs-target="#userForm"><i
+                                        class="bi bi-pencil-square"></i></button>
+                                <button class="btn btn-danger" th:onclick="'deleteInfo('+${producto.id} + ')'">
+                                    <i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!--Modal Form-->
+    <div class="modal fade" id="userForm">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Nueva prenda</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form th:action="@{/admin/productos}" method="post" enctype="multipart/form-data" id="myForm" th:object="${productoDto}">
+                        <div class="card imgholder">
+                            <label for="imgInput" class="upload">
+                                <input type="file" name="imagen" id="imgInput" accept="image/*">
+                                <i class="bi bi-plus-circle-dotted"></i>
+                            </label>
+                            <img src="image/icon-default.png" alt="" width="200" height="200" class="img">
+                        </div>
+
+                        <div class="inputField">
+                            <div>
+                                <label for="name">Nombre:</label>
+                                <input type="text" name="nombreProducto" id="name" required>
+                            </div>
+                            <div>
+                                <label for="category">Categoria:</label>
+                                <select name="categoria" id="category">
+                                    <option th:each="categoria : ${categorias}" 
+                                            th:value="${categoria.id}" 
+                                            th:text="${categoria.nombre}"></option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="size">Talla:</label>
+                                <select name="talla" id="size" required>
+                                    <option value="XS">XS</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="price">Precio precioProduccion:</label>
+                                <input type="number" name="precioProduccion" id="priceProduccion" min="0" required>
+                            </div>
+                            <div>
+                                <label for="price">Precio venta:</label>
+                                <input type="number" name="precioVenta" id="priceVenta" min="0" required>
+                            </div>
+                            <div>
+                                <label for="stock">Stock:</label>
+                                <input type="number" name="stock" id="stock" min="0" required>
+                            </div>
+                            <div>
+                                <label for="description">Descripcion:</label>
+                                <textarea id="description" name="descripcion" required></textarea>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" id="btnSave" form="myForm" class="btn btn-primary submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Read Data Modal-->
+    <div class="modal fade" id="readData">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Prenda</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form action="#" id="readForm">
+                        <div class="card imgholder">
+                            <img src="image/icon-default.png" alt="" width="200" height="200" class="showImg">
+                        </div>
+
+                        <div class="inputField">
+                            <div>
+                                <label for="showName">Nombre:</label>
+                                <input type="text" id="showName" disabled>
+                            </div>
+                            <div>
+                                <label for="showCategory">Categoria:</label>
+                                <select name="" id="showCategory" disabled>
+                                    <option th:each="categoria : ${categorias}" 
+                                            th:value="${categoria.id}" 
+                                            th:text="${categoria.nombre}"></option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="showSize">Talla:</label>
+                                <select id="showSize" disabled>
+                                    <option value="XS">XS</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="showPrice">Precio:</label>
+                                <input type="number" id="showPrice" disabled>
+                            </div>
+                            <div>
+                                <label for="showStock">Stock:</label>
+                                <input type="number" id="showStock" disabled>
+                            </div>
+                            <div>
+                                <label for="showDescription">Descripcion:</label>
+                                <textarea id="showDescription" disabled></textarea>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const listaProductos = /*[[${productos}]]*/ '[]';
+        console.log(listaProductos)
+        /*]]>*/
+    </script>
+    <script th:src="@{/js/admin/app.js}"></script>
+
+
+</body>
+
+</html>
+
+<!-- asdasd-->

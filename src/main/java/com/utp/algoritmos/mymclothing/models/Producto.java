@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -27,8 +28,9 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_PRODUCTO")
     private Long id;
-    @Column(name = "ID_CATEGORIA")
-    private String categoria;
+    @ManyToOne
+    @JoinColumn(name = "ID_CATEGORIA")
+    private Categoria categoria;
     @Column(name = "NOMBRE_PRODUCTO")
     private String nombreProducto;
     @Column(name = "DESCRIPCION")
@@ -38,7 +40,7 @@ public class Producto {
     @Column(name = "PRECIO_VENTA")
     private Double precioVenta;
     @Column(name = "STOCK_TOTAL")
-    private int stock;
+    private Integer stock;
     @Column(name = "URL_IMAGEN")
     private String urlImagen;
     @Column(name = "TALLA")
@@ -50,6 +52,8 @@ public class Producto {
     @JoinColumn(name = "ID_PRODUCTO")
     @JsonIgnore
     private List<DetalleVenta> detalleVenta;
+    
+
 
     //void temporalmente
     public void calcularPromedioResena(){}

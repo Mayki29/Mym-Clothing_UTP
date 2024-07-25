@@ -25,8 +25,9 @@
 
         <div class="row">
             <div class="col-12">
+                <a href="/" class="btn btn-primary newUser">Regresar al inicio</a>
                 <button class="btn btn-primary newUser" data-bs-toggle="modal" data-bs-target="#userForm">Agregar Nueva
-                    Prenda<i class="bi bi-plus-circle-fill"></i>
+                    Prenda <i class="bi bi-plus-circle-fill"></i>
                 </button>
             </div>
         </div>
@@ -94,10 +95,11 @@
                                 <input type="file" name="imagen" id="imgInput" accept="image/*">
                                 <i class="bi bi-plus-circle-dotted"></i>
                             </label>
-                            <img src="image/icon-default.png" alt="" width="200" height="200" class="img">
+                            <img src="../img/icon-default.png" alt="" width="200" height="200" class="img">
                         </div>
 
                         <div class="inputField">
+                            <input type="hidden" name="id" id="idProducto">
                             <div>
                                 <label for="name">Nombre:</label>
                                 <input type="text" name="nombreProducto" id="name" required>

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <link rel="stylesheet" th:href="@{/css/style_form.css}" />
+    <script src="https://www.paypal.com/sdk/js?client-id=AbTmLH_ZnqUla3JUOwD7KmoPg8_Wjfy-P185YoEcFbqG-zq60N14mM2OuuizvEpvMWGCvN5WLc6O4Q2O&currency=USD"></script>
     
 </head>
 
@@ -142,7 +143,6 @@
             <div th:each="producto : ${productos}" class="box">
                 <div class="icons">
                     <a class="bi bi-cart3 btn-agregar-carrito"></a>
-                    <a href="" class="bi bi-suit-heart-fill"></a>
                     <a href="" class="bi bi-eye-fill"></a>
                 </div>
                 <div class="image">
@@ -151,13 +151,6 @@
                 <div class="content">
                     <h3 th:text="${producto.nombreProducto}">ropa</h3>
                     <input type="hidden" th:value="${producto.id}" name="id">
-                    <div class="stars">
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-half"></i>
-                    </div>
                     <div th:text="${'S/. '+producto.precioVenta}" class="price"></div>
                 </div>
             </div>
@@ -168,7 +161,7 @@
 
     <!-- Inicia la creacion de la opcion "DESCUENTOS" de la pagina-->
 
-    <section class="descuentos" id="descuentos">
+    <!--section class="descuentos" id="descuentos">
         <h1 class="heading">productos <span> destacados</span></h1>
         <div class="box-container">
             <div class="box">
@@ -213,7 +206,7 @@
                 <a href="#" class="btn">agregar al carrito</a>
             </div>
         </div>
-    </section>
+    </section-->
 
     <!-- Finaliza la creacion de la opcion "DESCUENTOS" de la pagina-->
 
@@ -228,17 +221,16 @@
             </div>
 
             <div class="content">
-                <h3>Lorem ipsum dolor sit amet consectetur ?</h3>
+                <h3>Quienes somos</h3>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-                    laudantium illum ea aut fugiat, vero magnam reiciendis repellendus.
-                    Voluptatibus, sit molestiae? Obcaecati expedita voluptates quia vero
-                    ipsum animi aliquid blanditiis.
+                    En M&M, nos dedicamos a ofrecer ropa de alta calidad y a la moda para mujeres. 
+                    Nuestro objetivo es empoderarte con prendas que realcen tu estilo único y te hagan 
+                    sentir segura y fabulosa en cualquier ocasión. Exploramos las últimas tendencias y 
+                    seleccionamos cuidadosamente cada pieza para asegurarnos de que siempre encuentres 
+                    algo especial en nuestra colección. Gracias por elegir M&M como tu destino de moda.
                 </p>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel odio
-                    similique perspiciatis eligendi non, ipsam dolores blanditiis
-                    inventore deleniti aliquid.
+                    Gracias por elegir M&M como tu destino de moda.
                 </p>
                 <a href="#" class="btn"> Saber más</a>
             </div>
@@ -267,10 +259,31 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
             const listaProductos = /*[[${productos}]]*/ '[]';
+            /*<![CDATA[*/
+            const sesion = /*[[${sesion}]]*/ null;
+        /*]]>*/
         /*]]>*/
     </script>
     <script>
         paypal.Buttons({
+            onInit(data, actions) {
+                    if(sesion != null && sesion != undefined && sesion != {}  ){
+                        actions.enable();
+                    }else{
+                        actions.disable()
+                        
+                    }
+            },
+            onClick() {
+                    // Show a validation error if the checkbox isn't checked
+                    if(obtenerTotal() == 0){
+                        alert("Debe tener productos en el carrito")
+                    } else{
+                        if(sesion == null || sesion == undefined || sesion == {}  ){
+                            alert("Debe iniciar sesion")
+                        }
+                    }
+                },
             createOrder: function(data, actions) {
                 return actions.order.create({
                     purchase_units: [{
@@ -295,7 +308,7 @@
                         })
                     }).then(function(response) {
                         if(response.ok) {
-                            alert('Payment processed successfully');
+                            //alert('Payment processed successfully');
                             registrarVenta()
                             limpiarCarrito()
                             location.reload()

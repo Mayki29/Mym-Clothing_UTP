@@ -40,4 +40,10 @@ public class ProductoRepositoryImp implements ProductoRepository{
         entityManager.merge(producto);
     }
 
+    public void actualizar(Long id, Integer cantidad){
+        Producto producto = entityManager.find(Producto.class, id);
+        producto.setStock(producto.getStock() - cantidad);
+        entityManager.merge(producto);
+    }
+
 }

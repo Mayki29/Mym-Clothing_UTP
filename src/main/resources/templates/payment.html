@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Checkout</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h1>Checkout</h1>
+    <form action="/payment/checkout" method="post">
+        <div id="products">
+            <div class="product">
+                <label for="productName">Product Name:</label>
+                <input type="text" id="productName" name="products[0].nombreProducto" required><br><br>
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="products[0].quantity" required><br><br>
+                <label for="price">Price (in dollars):</label>
+                <input type="number" id="price" name="products[0].precioVenta" required><br><br>
+            </div>
+        </div>
+        <button type="button" onclick="addProduct()">Add another product</button><br><br>
+        <button type="submit">Checkout</button>
+    </form>
+
+    <div th:if="${sessionId != null}">
+        <button id="checkout-button">Pay</button>
+    </div>
+
+    <script th:inline="javascript" type="text/javascript" >
+        function addProduct() {
+            var productsDiv = document.getElementById('products');
+            var index = productsDiv.children.length;
+            var productDiv = document.createElement('div');
+            productDiv.className = 'product';
+            productDiv.innerHTML = `
+                <label for="productName">Product Name:</label>
+                <input type="text" id="productName" name="products[${index}].nombreProducto" required><br><br>
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="products[${index}].quantity" required><br><br>
+                <label for="price">Price (in dollars):</label>
+                <input type="number" id="price" name="products[${index}].precioVenta" required><br><br>
+            `;
+            productsDiv.appendChild(productDiv);
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            /*<![CDATA[*/
+            var stripe = Stripe(/*[[${stripePublishableKey}]]*/);
+            var checkoutButton = document.getElementById('checkout-button');
+            
+            checkoutButton.addEventListener('click', function () {
+                stripe.redirectToCheckout({
+                    sessionId: /*[[${sessionId}]]*/''
+                }).then(function (result) {
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
+                });
+            });
+            /*]]>*/
+        });
+    </script>
+</body>
+</html>

@@ -9,6 +9,10 @@
         <a href="#descuentos"> descuentos</a>
         <a href="#nosotros"> nosotros</a>
         <a href="#footer"> social</a>
+        <div th:if="${sesion}">
+            <a th:if="${sesion.rol == 1}" href="/admin/productos"> Administrador</a>
+        </div>
+        
     </nav>
 
     <div class="icons">
@@ -63,6 +67,7 @@
         <hr>
         <p>Total: S/. <span class="precio-total">0</span></p> 
         <hr>
-        <button id="stripe-button" class="btn btn-primary">Pagar con Stripe</button> <!-- Botón de Stripe aquí -->
+        <div id="paypal-button-container" ></div>
+        <!--button id="stripe-button" class="btn btn-primary">Pagar con Stripe</button> <-- Botón de Stripe aquí -->
     </div>
 </header>

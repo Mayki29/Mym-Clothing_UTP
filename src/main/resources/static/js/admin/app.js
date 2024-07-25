@@ -5,7 +5,8 @@ const nameInput = document.getElementById("name");
 const categoryInput = document.getElementById("category");
 const sizeInput = document.getElementById("size");
 const colorInput = document.getElementById("color");
-const priceInput = document.getElementById("price");
+const priceProduccionInput = document.getElementById("priceProduccion");
+const priceVentaInput = document.getElementById("priceVenta");
 const stockInput = document.getElementById("stock");
 const brandInput = document.getElementById("brand");
 const dateInput = document.getElementById("date");
@@ -16,6 +17,7 @@ const modal = document.getElementById("userForm");
 const modalTitle = document.querySelector("#userForm .modal-title");
 const newUserBtn = document.querySelector(".newUser");
 const idInput = document.getElementById("id");
+const idHidden = document.getElementById("idProducto");
 
 let getData = localStorage.getItem("userProfile")
   ? JSON.parse(localStorage.getItem("userProfile"))
@@ -100,33 +102,19 @@ function readInfo(id) {
   document.getElementById("showDescription").value = prod.descripcion;
 }
 
-function editInfo(
-  id,
-  image,
-  name,
-  category,
-  sizes,
-  color,
-  price,
-  stock,
-  brand,
-  date,
-  description
-) {
+function editInfo(id) {
   isEdit = true;
   editId = id;
-  imgInput.src = image;
-  nameInput.value = name;
-  categoryInput.value = category;
-  Array.from(sizeInput.options).forEach((option) => {
-    option.selected = sizes.includes(option.value);
-  });
-  colorInput.value = color;
-  priceInput.value = price;
-  stockInput.value = stock;
-  brandInput.value = brand;
-  dateInput.value = date;
-  descriptionInput.value = description;
+  const prod = buscarProducto(id);
+  idHidden.value = prod.id;
+  imgInput.src = '/imgProductos/'+prod.urlImagen;
+  nameInput.value = prod.nombreProducto;
+  categoryInput.value = prod.categoria.id;
+  sizeInput.value = prod.talla;
+  priceProduccionInput.value = prod.precioProduccion;
+  priceVentaInput.value = prod.precioVenta;
+  stockInput.value = prod.stock;
+  descriptionInput.value = prod.descripcion;
 
   submitBtn.innerText = "Update";
   modalTitle.innerText = "Edit Item";
@@ -134,9 +122,23 @@ function editInfo(
 
 function deleteInfo(id) {
   if (confirm("¿Estás seguro de eliminar este producto?")) {
-    getData = getData.filter((item) => item.id !== id);
-    localStorage.setItem("userProfile", JSON.stringify(getData));
-    showInfo();
+    fetch('/api/productos/'+id, {
+      method: 'DELETE',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+  })
+      .then(response => {
+          if (response.ok) {
+              alert("producto eliminado");
+              location.reload()
+          } else {
+              console.error('Error:', response.statusText);
+          }
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+      });
   }
 }
 function generateUniqueId(length = 5) {

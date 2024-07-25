@@ -43,7 +43,10 @@ public class DetalleVenta {
     public void calcularSubTotal(){}
 
     public Double getSubTotal(){
-        return precioUnitario * cantidad;
+        if(precioUnitario != null){
+            return precioUnitario * cantidad;
+        }
+        return null;
     }
 
 }

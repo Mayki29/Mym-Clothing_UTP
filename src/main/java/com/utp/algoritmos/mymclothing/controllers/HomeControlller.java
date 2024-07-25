@@ -77,6 +77,11 @@ public class HomeControlller {
         ventaService.save(venta);
     }
 
+    @DeleteMapping("/productos/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void eliminarProducto(@PathVariable Long id){
+        productoService.delete(id);
+    }
 
 
 

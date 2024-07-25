@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EntregaProducto {
-    private int id;
+    private Integer id;
     private Venta venta;
     private Date fechaSalida;
     private Date fechaEntrega;

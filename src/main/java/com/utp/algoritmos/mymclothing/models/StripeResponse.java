@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resena {
-    private Integer id;
-    private Integer calificacion;
+public class StripeResponse {
+    private String intentID;
+    private String clientSecret;
 }
